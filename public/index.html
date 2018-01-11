@@ -1,0 +1,116 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="coin-tracker">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>CoinTracker App</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <link rel="stylesheet" href="bower_components/angular-ui-notification/dist/angular-ui-notification.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="MainCtrl">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-3">
+                <h3 style="text-align: center">Binance</h3>
+                <div class="row">
+                    <h4>Prices</h4>
+                </div>
+                <div class="row" style="height:250px; overflow-y:auto">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td><strong>SYMBOL</strong></td>
+                            <td><strong>PRICE</strong></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="pair in binancePrices track by $index">
+                            <td>{{pair.symbol}}</td>
+                            <td>{{pair.price}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="row">
+                    <h4>Wallets</h4>
+                </div>
+                <div class="row">
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-lg-offset-1">
+                <h3 style="text-align: center">Bitfinex</h3>
+                <div class="row">
+                    <h4>Prices</h4>
+                </div>
+                <div class="row" style="height:250px; overflow-y:auto">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td><strong>SYMBOL</strong></td>
+                            <td><strong>PRICE</strong></td>
+                            <!--<td>VOLUME</td>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="pair in bitfinexPrices track by $index">
+                            <td>{{pair.symbol}}</td>
+                            <td>{{pair.price}}</td>
+                            <!--<td>{{pair.volume}}</td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="row">
+                    <h4>Wallets</h4>
+                </div>
+                <div class="row">
+
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-lg-offset-1">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+
+    <script src="app.js"></script>
+
+    <script src="services/exchanges/binance.service.js"></script>
+    <script src="services/exchanges/bitfinex.service.js"></script>
+    <script src="services/exchanges/cex.service.js"></script>
+    <script src="services/exchange.service.js"></script>
+
+    <script src="factory/rest-client.js"></script>
+
+    <script src="app.ctrl.js"></script>
+
+    <!--BITFINEX WALLETS-->
+    <!--<br>-->
+    <!--{{bitfinexWallets}}-->
+    <!--<br>-->
+
+</body>
+</html>

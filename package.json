@@ -1,0 +1,18 @@
+{
+  "name": "coin-tracker",
+  "version": "0.0.0",
+  "description"  : "Web app to track my cryptocurrencies in various exchanges",
+  "main"         : "server.js",
+  "author"       : "karq20",
+  "private": true,
+  "dependencies": {
+    "express": "latest",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "body-parser": "latest",
+    "method-override": "latest",
+    "bower": "latest",
+    "request": "latest",
+    "crypto": "latest"
+  }
+}
