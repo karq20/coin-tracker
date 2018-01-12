@@ -9,8 +9,8 @@ var crypto = require('crypto');
 var request = require("request");
 
 const nonce = Date.now().toString();
-const BFX_API_KEY = 'OomfS3HzAkr6DcYKYFTNr0z1iJ4FXmkOq3yqEdEO3sm';
-const BFX_API_SECRET = 'nBGWdE5O49fNolW0U3qweeu0KTU9TToqHeOwMemfTR7';
+const BFX_API_KEY = '';
+const BFX_API_SECRET = '';
 
 // configuration =================
 

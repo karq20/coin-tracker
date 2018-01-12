@@ -2,7 +2,7 @@ angular.module('coin-tracker')
     .controller('MainCtrl', function($scope, $http, coinRestClient, binanceService) {
 
         var bfxCoinString = 'tBTCUSD,tLTCUSD,tETHUSD,tZECUSD,tXMRUSD,tDASHUSD,tXRPUSD,' +
-            'tIOTAUSD,tEOSUSD,tSANUSD,tOMGUSD,tBCHUSD,tNEOUSD,tETPUSD,' +
+            'tIOTUSD,tEOSUSD,tSANUSD,tOMGUSD,tBCHUSD,tNEOUSD,tETPUSD,' +
             'tQTMUSD,tAVTUSD,tEDOUSD,tBTGUSD,tDATUSD,tQSHUSD,tETCUSD';
         // var bfxCoinString = 'tBTCUSD'
 
