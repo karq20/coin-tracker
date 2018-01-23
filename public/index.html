@@ -18,7 +18,29 @@
 <body>
 
 	<div ng-controller="MainCtrl">
-		<div ng-include src="'templates/main.html'"></div>
+
+		<div class="btn-group" role="group">
+			<div class="btn btn-default"
+					 ng-model="selected"
+					 ng-click="selected='prices'"
+					 ng-class="{'btn-primary':selected=='prices'}">
+				Prices
+			</div>
+			<div class="btn btn-default"
+					 ng-model="selected"
+					 ng-click="selected='wallets'"
+					 ng-class="{'btn-primary':selected=='wallets'}">
+				Wallets
+			</div>
+		</div>
+
+		<div ng-if="selected == 'prices'">
+			<div ng-include src="'templates/prices.html'"></div>
+		</div>
+
+		<div ng-if="selected == 'wallets'">
+			<div ng-include src="'templates/wallets.html'"></div>
+		</div>
 
 
 

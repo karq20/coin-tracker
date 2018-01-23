@@ -3,6 +3,8 @@ angular.module('coin-tracker')
 
     var promises = []
     var bfxString = constantsService.getMyBitfinexCoinStringQuery()
+    $scope.amountByExchange = constantsService.getNumberOfCoins()
+    $scope.selected = 'prices'
 
     var listOfProcessFunctions = [
       // processCexPrices,
@@ -115,32 +117,26 @@ angular.module('coin-tracker')
 
 
     function findPriceOfCoin(prices, symbol) {
-      var lo = prices.filter(function(p) {
+      return prices.filter(function(p) {
         return p.symbol == symbol
-      })[0]
-        return lo.price
+      })[0].price
     }
+
     function findAmountOfCoin(exchange, symbol) {
-      return constantsService.getNumberOfCoins()
-        .filter(function(n) {
-          return n.exchange == exchange;
-        })[0]
-        .coins
-        .filter(function(c) {
-          return c.symbol == symbol;
-        })[0].amount
+      return $scope.amountByExchange[exchange].filter(function(c) {
+        return c.symbol == symbol;
+      })[0].amount
     }
 
     function calculateTotalUsd() {
       $scope.totalUsd = 0;
       $scope.exchangeWiseTotal = { cex: 0, bitfinex: 0, binance: 0, kucoin: 0, bitgrail: 0 }
-      var coinsAmount = constantsService.getNumberOfCoins()
-      constantsService.myCoins.forEach(function(c) {
-
-        c.coins.forEach(function(coin) {
-          var amount = findAmountOfCoin(c.location.name, coin.symbol)
+      var coins = constantsService.myCoins;
+      for(c in coins) {
+        coins[c].forEach(function(coin) {
+          var amount = findAmountOfCoin(c, coin.symbol)
           var price;
-          switch(c.location.name) {
+          switch(c) {
             case 'cex':
               price = findPriceOfCoin($scope.cexPrices, coin.symbol)
               $scope.exchangeWiseTotal['cex'] += price*amount
@@ -163,7 +159,7 @@ angular.module('coin-tracker')
           }
           $scope.totalUsd = $scope.totalUsd + price*amount
         })
-      })
+      }
 
       $scope.totalUsd = $scope.totalUsd.toFixed(2)
 
