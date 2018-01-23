@@ -5,6 +5,10 @@
   "main"         : "server.js",
   "author"       : "karq20",
   "private": true,
+  "engines": {
+    "node": "4.2.6",
+    "npm": "3.5.2"
+  },
   "dependencies": {
     "express": "~4.16.2",
     "mongoose": "~5.0.1",
