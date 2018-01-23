@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
+    "bootstrap": "~3.0.0",
     "angular": "~1.6.8",
     "angular-bootstrap": "~2.5.0",
     "angular-ui-notification": "~0.3.6",

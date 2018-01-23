@@ -1,65 +1,61 @@
 angular.module('coin-tracker')
-    .factory('coinRestClient', function($http) {
+  .factory('coinRestClient', function($http) {
 
-        var coinRestClient = {};
+    var coinRestClient = {};
+
+    coinRestClient.getCexIoPrices = function() {
+      return $http.post('/api/cex/prices')
+        .then(function(resp) {
+          return resp.data.body;
+        })
+    };
+
+    coinRestClient.getAllBinancePrices = function() {
+      return $http.post('/api/binance/allPrices')
+        .then(function(resp) {
+          return resp.data.body;
+        })
+    };
+
+    coinRestClient.getBitfinexPrices = function(coins) {
+      return $http.post('/api/bitfinex/prices', { coins: coins })
+        .then(function(resp) {
+          return resp.data.body;
+        })
+    };
+
+    coinRestClient.getBitgrailPrices = function() {
+      return $http.post('/api/bitgrail/prices')
+        .then(function(resp) {
+          return resp.data.body;
+        })
+    };
+
+    coinRestClient.getKucoinPrices = function() {
+      return $http.post('/api/kucoin/prices')
+        .then(function(resp) {
+          return resp.data.body;
+        })
+    };
 
 
-        coinRestClient.getAllBinancePrices = function() {
-
-            return $http.get('/api/binance/allPrices').then(function(resp) {
-                return resp.data.body;
-            })
-
-        }
-
-        coinRestClient.getBitfinexPrices = function(coins) {
-            return $http.post('/api/bitfinex/prices', {
-                coins: coins
-            }).then(function(resp) {
-                return resp.data.body;
-            })
-        }
-
-        coinRestClient.getBitfinexWallets = function() {
-            return $http.post('/api/bitfinex/wallets').then(function(resp) {
-                return resp.data.body;
-            })
-        }
-
-
-        // when landing on the page, get all todos and show them
-        coinRestClient.getCoins = function() {
-            return $http.get('/api/todos')
-                .then(function(resp) {
-                    return resp.data;
-                },function(err) {
-                    console.log('Error while getting: ' + err);
-                });
-        };
-
-        // when submitting the add form, send the text to the node API
-        coinRestClient.createTodo = function(data) {
-            return $http.post('/api/todos', data)
-                .then(function(resp) {
-                    return resp.data;
-                }, function(err) {
-                    console.log('Error while posting: ' + err);
-                });
-        };
-
-        // delete a todo after checking it
-        coinRestClient.deleteTodo = function(todo) {
-            return $http.delete('/api/todos/' + todo._id)
-                .then(function(resp) {
-                    return resp.data;
-                }, function(err) {
-                    console.log('Error while deleting: ' + err);
-                })
-        };
+    // coinRestClient.getBitfinexWallets = function() {
+    //   return $http.post('/api/bitfinex/wallets')
+    //     .then(function(resp) {
+    //       return resp.data.body;
+    //     })
+    // }
 
 
 
 
-        return coinRestClient;
 
-    })
+
+
+
+
+
+
+    return coinRestClient;
+
+  })

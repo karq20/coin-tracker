@@ -12,7 +12,6 @@
     "body-parser": "latest",
     "method-override": "latest",
     "bower": "latest",
-    "request": "latest",
-    "crypto": "latest"
+    "request": "latest"
   }
 }

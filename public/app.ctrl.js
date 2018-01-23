@@ -1,82 +1,192 @@
 angular.module('coin-tracker')
-    .controller('MainCtrl', function($scope, $http, coinRestClient, binanceService) {
+  .controller('MainCtrl', function($scope, $http, coinRestClient, constantsService, $q) {
 
-        var bfxCoinString = 'tBTCUSD,tLTCUSD,tETHUSD,tZECUSD,tXMRUSD,tDASHUSD,tXRPUSD,' +
-            'tIOTUSD,tEOSUSD,tSANUSD,tOMGUSD,tBCHUSD,tNEOUSD,tETPUSD,' +
-            'tQTMUSD,tAVTUSD,tEDOUSD,tBTGUSD,tDATUSD,tQSHUSD,tETCUSD';
-        // var bfxCoinString = 'tBTCUSD'
+    var promises = []
+    var bfxString = constantsService.getMyBitfinexCoinStringQuery()
 
-        getAllExchangePrices()
+    var listOfProcessFunctions = [
+      // processCexPrices,
+      processBinancePrices,
+      processBitfinexPrices,
+      processBitgrailPrices,
+      processKucoinPrices
+    ]
 
-        function getAllExchangePrices() {
-            $scope.binancePrices = []
-            $scope.bitfinexPrices = [];
-            getAllBinancePrices()
-            getBitfinexPrices()
+    getAllExchangePrices()
 
-        }
+    function getAllExchangePrices() {
+      $scope.cexPrices = []
+      $scope.binancePrices = []
+      $scope.bitfinexPrices = []
+      $scope.bitgrailPrices = []
+      $scope.kucoinPrices = []
 
-        function getAllBinancePrices() {
-            coinRestClient.getAllBinancePrices()
-                .then(function(resp) {
-                    $scope.binancePrices = JSON.parse(resp);
-                });
-        }
+      // promises.push(coinRestClient.getCexIoPrices())
+      promises.push(coinRestClient.getAllBinancePrices())
+      promises.push(coinRestClient.getBitfinexPrices(bfxString))
+      promises.push(coinRestClient.getBitgrailPrices())
+      promises.push(coinRestClient.getKucoinPrices())
+    }
 
-        function getBitfinexPrices() {
-            coinRestClient.getBitfinexPrices(bfxCoinString).then(function(resp) {
-                processBfxPrices(JSON.parse(resp));
-            });
-        }
-
-        $scope.bitfinexWallets = [];
-        // coinRestClient.getBitfinexWallets()
-        //     .then(function(resp) {
-        //         $scope.bitfinexWallets = resp;
-        //     });
-
-
-        function processBfxPrices(list) {
-            list.forEach(function(p) {
-                var priceObj = {};
-                console.log(p);
-                priceObj.symbol = p[0].substr(1, p[0].length);
-                priceObj.price = '$ ' + p[7];
-                // priceObj.volume = p[8];
-                $scope.bitfinexPrices.push(priceObj);
-            })
-        }
-
-
-        function changeBinancePairsToUsdPairs() {
-            // var prices = JSON.parse(resp);
-            // $scope.btcPrice = prices.filter(function(p) {
-            //     if(p.symbol == 'BTCUSDT')
-            //         return p.price;
-            // })
-            // $scope.ethPrice = prices.filter(function(p) {
-            //     if(p.symbol == 'ETHUSDT')
-            //         return p.price;
-            // })
-            // $scope.bnbPrice = prices.filter(function(p) {
-            //     if(p.symbol == 'BNBUSDT')
-            //         return p.price;
-            // })
-            // console.log($scope.btcPrice)
-            // $scope.binancePrices = prices.map(function(p) {
-            //     if(p.symbol.substr(-3,3) == 'BTC')
-            //         return '$ ' + p*$scope.btcPrice;
-            //     if(p.symbol.substr(-3,3) == 'BNB')
-            //         return '$ ' + p*$scope.bnbPrice;
-            //     if(p.symbol.substr(-3,3) == 'ETH')
-            //         return '$ ' + p*$scope.ethPrice;
-            // }, [])
-
-        }
-
-
-        window.setInterval(function() {
-            getAllExchangePrices()
-        }, 20*60*1000);
-
+    $q.all(promises).then(function(responses) {
+      listOfProcessFunctions.forEach(function(process, index) {
+        process(responses[index])
+      })
+      calculateTotalUsd()
     })
+
+
+    function processCexPrices(list) {
+      var prices = JSON.parse(list).data
+      $scope.cexPrices = prices.map(function(p) {
+        p.price = Number(p.lprice).toFixed(2)
+        p.symbol = p.symbol1
+        return p
+      }, [])
+    }
+
+    function processBinancePrices(list) {
+      var prices = JSON.parse(list);
+      $scope.binanceBtcPrice = prices.filter(function(p) {
+        if(p.symbol == 'BTCUSDT')
+          return p.price;
+      })[0].price
+      $scope.binanceBtcPrice = Number($scope.binanceBtcPrice).toFixed(2)
+
+      $scope.binancePrices = prices.map(function(p) {
+        if(p.symbol.substr(-3,3) == 'BTC') {
+          var usdPrice = p.price*$scope.binanceBtcPrice
+          return {
+            symbol: p.symbol.replace('BTC',''),
+            price: usdPrice.toFixed(2)
+          };
+        }
+      }, []).filter(function(p) {
+        if(p) return p
+      })
+      $scope.binancePrices.unshift({symbol:'BTC', price: $scope.binanceBtcPrice})
+    }
+
+    function processBitfinexPrices(list) {
+      var prices = JSON.parse(list)
+      prices.forEach(function(p) {
+        var priceObj = {};
+        priceObj.symbol = p[0].substr(1, p[0].length-4);
+        priceObj.price = Number(p[7]).toFixed(2);
+        $scope.bitfinexPrices.push(priceObj);
+      })
+    }
+
+    function processBitgrailPrices(list) {
+      var xrbPricePair = JSON.parse(list).response["BTC"][0]
+      var xrbPair = xrbPricePair.market.split('/')[0]
+      var xrbPrice = parseFloat(xrbPricePair.last)
+      xrbPrice = xrbPrice*$scope.binanceBtcPrice
+      $scope.bitgrailPrices = [
+        {
+          symbol: xrbPair,
+          price: xrbPrice.toFixed(2)
+        }
+      ]
+    }
+
+    function processKucoinPrices(list) {
+      var prices = JSON.parse(list).data
+
+      var btcPrice = prices.filter(function(p) {
+        if(p.symbol == 'BTC-USDT')
+          return p.lastDealPrice;
+      })[0].lastDealPrice
+      btcPrice = Number(btcPrice).toFixed(2)
+
+      $scope.kucoinPrices = prices.map(function(p) {
+        if(p.symbol.substr(-3,3) == 'BTC') {
+          var usdPrice = p.lastDealPrice*btcPrice
+          return {
+            symbol: p.symbol.replace('-BTC',''),
+            price: usdPrice.toFixed(2)
+          };
+        }
+      }, []).filter(function(p) {
+        if(p) return p
+      })
+
+    }
+
+
+    function findPriceOfCoin(prices, symbol) {
+      var lo = prices.filter(function(p) {
+        return p.symbol == symbol
+      })[0]
+        return lo.price
+    }
+    function findAmountOfCoin(exchange, symbol) {
+      return constantsService.getNumberOfCoins()
+        .filter(function(n) {
+          return n.exchange == exchange;
+        })[0]
+        .coins
+        .filter(function(c) {
+          return c.symbol == symbol;
+        })[0].amount
+    }
+
+    function calculateTotalUsd() {
+      $scope.totalUsd = 0;
+      $scope.exchangeWiseTotal = { cex: 0, bitfinex: 0, binance: 0, kucoin: 0, bitgrail: 0 }
+      var coinsAmount = constantsService.getNumberOfCoins()
+      constantsService.myCoins.forEach(function(c) {
+
+        c.coins.forEach(function(coin) {
+          var amount = findAmountOfCoin(c.location.name, coin.symbol)
+          var price;
+          switch(c.location.name) {
+            case 'cex':
+              price = findPriceOfCoin($scope.cexPrices, coin.symbol)
+              $scope.exchangeWiseTotal['cex'] += price*amount
+              break;
+            case 'bitfinex':
+              price = findPriceOfCoin($scope.bitfinexPrices, coin.symbol)
+              $scope.exchangeWiseTotal['bitfinex'] += price*amount
+              break;
+            case 'binance':
+              price = findPriceOfCoin($scope.binancePrices, coin.symbol)
+              $scope.exchangeWiseTotal['binance'] += price*amount
+              break;
+            case 'kucoin':
+              price = findPriceOfCoin($scope.kucoinPrices, coin.symbol)
+              $scope.exchangeWiseTotal['kucoin'] += price*amount
+              break;
+            case 'bitgrail':
+              price = findPriceOfCoin($scope.bitgrailPrices, coin.symbol)
+              $scope.exchangeWiseTotal['bitgrail'] += price*amount
+          }
+          $scope.totalUsd = $scope.totalUsd + price*amount
+        })
+      })
+
+      $scope.totalUsd = $scope.totalUsd.toFixed(2)
+
+      console.log("total USD = ", $scope.totalUsd)
+      console.log("total exchange wise USD = ", $scope.exchangeWiseTotal)
+
+    }
+
+    $scope.toFixed = function (num) {
+      return Number(num).toFixed(2);
+    }
+
+    window.setInterval(function() {
+      getAllExchangePrices()
+    }, 20*60*1000);
+
+
+    // $scope.bitfinexWallets = [];
+    // function getBitfinexWallets() {
+    //   coinRestClient.getBitfinexWallets()
+    //     .then(function(resp) {
+    //       $scope.bitfinexWallets = resp;
+    //     });
+    // }
+
+  })
