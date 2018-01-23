@@ -1,4 +1,5 @@
 // set up ========================
+var port = process.env.PORT || 8080;
 var express  = require('express');
 var app      = express();                         // create our app with express
 var mongoose = require('mongoose');               // mongoose for mongodb
@@ -22,8 +23,8 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-app.listen(3000);
-console.log("App listening on port 3000");
+app.listen(port);
+console.log("App listening on port "+port);
 
 // model =================================
 
