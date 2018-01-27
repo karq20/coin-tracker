@@ -17,7 +17,7 @@
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
 <body>
 
-	<div ng-controller="MainCtrl">
+	<div ng-controller="MainCtrl"  style="font-size:14px">
 
 		<div class="btn-group" role="group">
 			<div class="btn btn-default"
@@ -34,6 +34,8 @@
 			</div>
 		</div>
 
+
+		
 		<div ng-if="selected == 'prices'">
 			<div ng-include src="'templates/prices.html'"></div>
 		</div>

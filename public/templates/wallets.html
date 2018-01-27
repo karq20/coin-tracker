@@ -1,98 +1,118 @@
 <div class="container">
 
-  <div class="row" >
-    <div class="col-md-4">
-      <h3>My Wallets</h3>
+    <div class="row" >
+      <div class="col-md-3">
+        <h3 style="margin-bottom:20px">My Exchange Wallets</h3>
+      </div>
+      <div class="col-md-5 col-md-offset-1">
+        <div style="margin-top:20px">
+          <span style="font-size:18px">Net Worth = $ {{totalUsd}}</span> &nbsp;&nbsp;&nbsp;
+          <span style="font-size:15px">{{totalBtc}} BTC</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h4 style="margin-top:20px">BTC Price = $ {{binanceBtcPrice}}</h4>
+      </div>
     </div>
-    <div class="col-md-4">
-      <h4>Net Worth = ${{totalUsd}}</h4>
+    <div class="row" style="text-align: center; border: 1px outset slategrey">
+  
+      <div class="col-md-3" style="padding:1% 2% 1% 2%;" >
+        <h4><strong>Bitfinex</strong></h4>
+        <div class="row" style="border-bottom:1px dashed slategrey">
+            <span style="font-size:16px">$ {{exchangeWiseUsdTotal['bitfinex']}}</span>&nbsp;&nbsp;
+            <span style="font-size:13px">{{exchangeWiseBtcTotal['bitfinex']}} BTC</span>
+        </div>
+        <div class="row" style="height:450px; overflow-y:auto;">
+          <table class="table">
+            <thead>
+            <tr>
+              <td><em>SYMBOL</em></td>
+              <td><em>AMOUNT</em></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="pair in amountByExchange.bitfinex track by $index">
+              <td>{{pair.symbol}}</td>
+              <td>{{pair.amount}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="col-md-3" style="padding:1% 2% 1% 2%; border-left: 1px outset slategrey">
+        <h4><strong>Binance</strong></h4>
+        <div class="row" style="border-bottom:1px dashed slategrey">
+            <span style="font-size:16px">$ {{exchangeWiseUsdTotal['binance']}}</span>&nbsp;&nbsp;
+            <span style="font-size:13px">{{exchangeWiseBtcTotal['binance']}} BTC</span>
+        </div>
+        <div class="row" style="height:450px; overflow-y:auto;">
+          <table class="table">
+            <thead>
+            <tr>
+              <td><em>SYMBOL</em></td>
+              <td><em>AMOUNT</em></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="pair in amountByExchange.binance track by $index">
+              <td>{{pair.symbol}}</td>
+              <td>{{pair.amount}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="col-md-3" style="padding:1% 2% 1% 2%; border-left: 1px outset slategrey">
+        <h4><strong>Kucoin</strong></h4>
+        <div class="row" style="border-bottom:1px dashed slategrey">
+            <span style="font-size:16px">$ {{exchangeWiseUsdTotal['kucoin']}}</span>&nbsp;&nbsp;
+            <span style="font-size:13px">{{exchangeWiseBtcTotal['kucoin']}} BTC</span>
+        </div>
+        <div class="row" style="height:450px; overflow-y:auto;">
+          <table class="table">
+            <thead>
+            <tr>
+              <td><em>SYMBOL</em></td>
+              <td><em>AMOUNT</em></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="pair in amountByExchange.kucoin track by $index">
+              <td>{{pair.symbol}}</td>
+              <td>{{pair.amount}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+      <div class="col-md-3" style="padding:1% 2% 1% 2%; border-left: 1px outset slategrey">
+        <h4><strong>Bitgrail</strong></h4>
+        <div class="row" style="border-bottom:1px dashed slategrey">
+            <span style="font-size:16px">$ {{exchangeWiseUsdTotal['bitgrail']}}</span>&nbsp;&nbsp;
+            <span style="font-size:13px">{{exchangeWiseBtcTotal['bitgrail']}} BTC</span>
+        </div>
+        <div class="row" style="height:450px; overflow-y:auto;">
+          <table class="table">
+            <thead>
+            <tr>
+              <td><em>SYMBOL</em></td>
+              <td><em>AMOUNT</em></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="pair in amountByExchange.bitgrail track by $index">
+              <td>{{pair.symbol}}</td>
+              <td>{{pair.amount}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
     </div>
-    <div class="col-md-4">
-      <h4>BTC Price = ${{binanceBtcPrice}}</h4>
-    </div>
+  
   </div>
-  <div class="row" style="text-align: center; border: 1px outset slategrey">
-
-    <div class="col-md-3" style="padding:2%">
-      <h4>Bitfinex</h4>
-      <div class="row" style="height:450px; overflow-y:auto">
-        <table class="table">
-          <thead>
-          <tr>
-            <td><strong>SYMBOL</strong></td>
-            <td><strong>AMOUNT</strong></td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr data-ng-repeat="pair in amountByExchange.bitfinex track by $index">
-            <td>{{pair.symbol}}</td>
-            <td>{{pair.amount}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="col-md-3" style="padding:2%">
-      <h4>Binance</h4>
-      <div class="row" style="height:450px; overflow-y:auto">
-        <table class="table">
-          <thead>
-          <tr>
-            <td><strong>SYMBOL</strong></td>
-            <td><strong>AMOUNT</strong></td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr data-ng-repeat="pair in amountByExchange.binance track by $index">
-            <td>{{pair.symbol}}</td>
-            <td>{{pair.amount}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="col-md-3" style="padding:2%">
-      <h4>Kucoin</h4>
-      <div class="row" style="height:450px; overflow-y:auto">
-        <table class="table">
-          <thead>
-          <tr>
-            <td><strong>SYMBOL</strong></td>
-            <td><strong>AMOUNT</strong></td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr data-ng-repeat="pair in amountByExchange.kucoin track by $index">
-            <td>{{pair.symbol}}</td>
-            <td>{{pair.amount}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="col-md-3" style="padding:2%">
-      <h4>Bitgrail</h4>
-      <div class="row" style="height:450px; overflow-y:auto">
-        <table class="table">
-          <thead>
-          <tr>
-            <td><strong>SYMBOL</strong></td>
-            <td><strong>AMOUNT</strong></td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr data-ng-repeat="pair in amountByExchange.bitgrail track by $index">
-            <td>{{pair.symbol}}</td>
-            <td>{{pair.amount}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-
-</div>
+  

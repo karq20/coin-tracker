@@ -150,7 +150,7 @@ angular.module('coin-tracker')
 
     function calculateTotalUsd() {
       $scope.totalUsd = 0;
-      $scope.exchangeWiseTotal = { cex: 0, bitfinex: 0, binance: 0, kucoin: 0, bitgrail: 0 }
+      $scope.exchangeWiseUsdTotal = { cex: 0, bitfinex: 0, binance: 0, kucoin: 0, bitgrail: 0 }
       var coins = $scope.myCoins;
       for(c in coins) {
         coins[c].forEach(function(coin) {
@@ -159,38 +159,43 @@ angular.module('coin-tracker')
           switch(c) {
             case 'cex':
               price = findPriceOfCoin($scope.cexPrices, coin.symbol)
-              $scope.exchangeWiseTotal['cex'] += price*amount
+              $scope.exchangeWiseUsdTotal['cex'] += price*amount
               break;
             case 'bitfinex':
               price = findPriceOfCoin($scope.bitfinexPrices, coin.symbol)
-              $scope.exchangeWiseTotal['bitfinex'] += price*amount
+              $scope.exchangeWiseUsdTotal['bitfinex'] += price*amount
               break;
             case 'binance':
               price = findPriceOfCoin($scope.binancePrices, coin.symbol)
-              $scope.exchangeWiseTotal['binance'] += price*amount
+              $scope.exchangeWiseUsdTotal['binance'] += price*amount
               break;
             case 'kucoin':
               price = findPriceOfCoin($scope.kucoinPrices, coin.symbol)
-              $scope.exchangeWiseTotal['kucoin'] += price*amount
+              $scope.exchangeWiseUsdTotal['kucoin'] += price*amount
               break;
             case 'bitgrail':
               price = findPriceOfCoin($scope.bitgrailPrices, coin.symbol)
-              $scope.exchangeWiseTotal['bitgrail'] += price*amount
+              $scope.exchangeWiseUsdTotal['bitgrail'] += price*amount
           }
           $scope.totalUsd = $scope.totalUsd + price*amount
         })
       }
 
-      $scope.totalUsd = $scope.totalUsd.toFixed(2)
-
-      for(ex in $scope.exchangeWiseTotal) {
-        $scope.exchangeWiseTotal[ex] = $scope.exchangeWiseTotal[ex].toFixed(2)
+      $scope.totalUsd = $scope.toFixed($scope.totalUsd, 2)
+      $scope.totalBtc = $scope.totalUsd/$scope.binanceBtcPrice
+      $scope.totalBtc = $scope.toFixed($scope.totalBtc, 6)
+      $scope.exchangeWiseBtcTotal = {}
+      for(ex in $scope.exchangeWiseUsdTotal) {
+        $scope.exchangeWiseUsdTotal[ex] = $scope.toFixed($scope.exchangeWiseUsdTotal[ex], 2)
+        $scope.exchangeWiseBtcTotal[ex] = $scope.exchangeWiseUsdTotal[ex]/$scope.binanceBtcPrice
+        $scope.exchangeWiseBtcTotal[ex] = $scope.toFixed($scope.exchangeWiseBtcTotal[ex], 6)
       }
+
 
     }
 
-    $scope.toFixed = function (num) {
-      return Number(num).toFixed(2);
+    $scope.toFixed = function (num, prec) {
+      return Number(num).toFixed(prec);
     }
 
     window.setInterval(function() {
