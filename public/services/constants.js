@@ -50,10 +50,10 @@ angular.module('coin-tracker')
           name: 'ethereum',
           symbol: 'ETH'
         },
-        {
-          name: 'bitcoin',
-          symbol: 'BTC'
-        },
+        // {
+        //   name: 'bitcoin',
+        //   symbol: 'BTC'
+        // },
         {
           name: 'binance-coin',
           symbol: 'BNB'
@@ -105,14 +105,6 @@ angular.module('coin-tracker')
       ],
       kucoin: [
         {
-          name: 'vechain',
-          symbol: 'VEN'
-        },
-        {
-          name: 'red-pulse',
-          symbol: 'RPX'
-        },
-        {
           name: 'kucoin-shares',
           symbol: 'KCS'
         },
@@ -121,8 +113,16 @@ angular.module('coin-tracker')
           symbol: 'PRL'
         },
         {
+          name: 'vechain',
+          symbol: 'VEN'
+        },
+        {
           name: 'bounty0x',
           symbol: 'BNTY'
+        },
+        {
+          name: 'red-pulse',
+          symbol: 'RPX'
         }
       ],
       bitgrail: [{name:'raiblocks', symbol: 'XRB'}]
@@ -174,10 +174,10 @@ angular.module('coin-tracker')
             symbol: 'ETH',
             amount: 2.99
           },
-          {
-            symbol: 'BTC',
-            amount: 0
-          },
+          // {
+          //   symbol: 'BTC',
+          //   amount: 0
+          // },
           {
             symbol: 'BNB',
             amount: 96.26
@@ -229,14 +229,6 @@ angular.module('coin-tracker')
         ],
         kucoin: [
           {
-            symbol: 'VEN',
-            amount: 118
-          },
-          {
-            symbol: 'RPX',
-            amount: 1800
-          },
-          {
             symbol: 'KCS',
             amount: 15
           },
@@ -245,8 +237,16 @@ angular.module('coin-tracker')
             amount: 100
           },
           {
+            symbol: 'VEN',
+            amount: 118
+          },
+          {
             symbol: 'BNTY',
             amount: 449
+          },
+          {
+            symbol: 'RPX',
+            amount: 1800
           }
         ],
         bitgrail: [

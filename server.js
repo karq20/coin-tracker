@@ -115,7 +115,7 @@ app.post('/api/bitfinex/wallets', function(req, res) {
 
 
 //Bitgrail prices
-var bitgrailApiUrl = 'https://bitgrail.com/api/v1/markets'
+var bitgrailApiUrl = 'https://api.bitgrail.com/v1/markets'
 app.post('/api/bitgrail/prices', function(req, res) {
   request({
     uri: bitgrailApiUrl,

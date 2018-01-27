@@ -4,6 +4,7 @@ angular.module('coin-tracker')
     var promises = []
     var bfxString = constantsService.getMyBitfinexCoinStringQuery()
     $scope.amountByExchange = constantsService.getNumberOfCoins()
+    $scope.myCoins = constantsService.myCoins;
     $scope.selected = 'prices'
 
     var listOfProcessFunctions = [
@@ -47,15 +48,20 @@ angular.module('coin-tracker')
       }, [])
     }
 
-    function processBinancePrices(list) {
-      var prices = JSON.parse(list);
+    function getBinanceBtcPrice(prices) {
       $scope.binanceBtcPrice = prices.filter(function(p) {
         if(p.symbol == 'BTCUSDT')
           return p.price;
       })[0].price
       $scope.binanceBtcPrice = Number($scope.binanceBtcPrice).toFixed(2)
+    }
 
-      $scope.binancePrices = prices.map(function(p) {
+    function processBinancePrices(list) {
+      var prices = JSON.parse(list);
+
+      getBinanceBtcPrice(prices)
+
+      var allBinancePrices = prices.map(function(p) {
         if(p.symbol.substr(-3,3) == 'BTC') {
           var usdPrice = p.price*$scope.binanceBtcPrice
           return {
@@ -66,7 +72,15 @@ angular.module('coin-tracker')
       }, []).filter(function(p) {
         if(p) return p
       })
-      $scope.binancePrices.unshift({symbol:'BTC', price: $scope.binanceBtcPrice})
+
+      allBinancePrices.map(function(p) {
+        $scope.myCoins.binance.map(function(coin) {
+          if(coin.symbol == p.symbol)
+            $scope.binancePrices.push(p)
+        })
+      })
+
+      // $scope.binancePrices.unshift({symbol:'BTC', price: $scope.binanceBtcPrice})
     }
 
     function processBitfinexPrices(list) {
@@ -80,13 +94,11 @@ angular.module('coin-tracker')
     }
 
     function processBitgrailPrices(list) {
-      var xrbPricePair = JSON.parse(list).response["BTC"][0]
-      var xrbPair = xrbPricePair.market.split('/')[0]
-      var xrbPrice = parseFloat(xrbPricePair.last)
+      var xrbPrice = JSON.parse(list)['response']['BTC']['markets']['XRB/BTC']['last']
       xrbPrice = xrbPrice*$scope.binanceBtcPrice
       $scope.bitgrailPrices = [
         {
-          symbol: xrbPair,
+          symbol: 'XRB',
           price: xrbPrice.toFixed(2)
         }
       ]
@@ -101,7 +113,7 @@ angular.module('coin-tracker')
       })[0].lastDealPrice
       btcPrice = Number(btcPrice).toFixed(2)
 
-      $scope.kucoinPrices = prices.map(function(p) {
+      var allKucoinPrices = prices.map(function(p) {
         if(p.symbol.substr(-3,3) == 'BTC') {
           var usdPrice = p.lastDealPrice*btcPrice
           return {
@@ -112,6 +124,14 @@ angular.module('coin-tracker')
       }, []).filter(function(p) {
         if(p) return p
       })
+
+      allKucoinPrices.map(function(p) {
+        $scope.myCoins.kucoin.map(function(coin) {
+          if(coin.symbol == p.symbol)
+            $scope.kucoinPrices.push(p)
+        })
+      })
+
 
     }
 
@@ -131,7 +151,7 @@ angular.module('coin-tracker')
     function calculateTotalUsd() {
       $scope.totalUsd = 0;
       $scope.exchangeWiseTotal = { cex: 0, bitfinex: 0, binance: 0, kucoin: 0, bitgrail: 0 }
-      var coins = constantsService.myCoins;
+      var coins = $scope.myCoins;
       for(c in coins) {
         coins[c].forEach(function(coin) {
           var amount = findAmountOfCoin(c, coin.symbol)
@@ -163,8 +183,9 @@ angular.module('coin-tracker')
 
       $scope.totalUsd = $scope.totalUsd.toFixed(2)
 
-      console.log("total USD = ", $scope.totalUsd)
-      console.log("total exchange wise USD = ", $scope.exchangeWiseTotal)
+      for(ex in $scope.exchangeWiseTotal) {
+        $scope.exchangeWiseTotal[ex] = $scope.exchangeWiseTotal[ex].toFixed(2)
+      }
 
     }
 
