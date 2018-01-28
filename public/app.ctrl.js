@@ -11,7 +11,7 @@ angular.module('coin-tracker')
       // processCexPrices,
       processBinancePrices,
       processBitfinexPrices,
-      processBitgrailPrices,
+      // processBitgrailPrices,
       processKucoinPrices
     ]
 
@@ -21,13 +21,13 @@ angular.module('coin-tracker')
       $scope.cexPrices = []
       $scope.binancePrices = []
       $scope.bitfinexPrices = []
-      $scope.bitgrailPrices = []
+      // $scope.bitgrailPrices = []
       $scope.kucoinPrices = []
 
       // promises.push(coinRestClient.getCexIoPrices())
       promises.push(coinRestClient.getAllBinancePrices())
       promises.push(coinRestClient.getBitfinexPrices(bfxString))
-      promises.push(coinRestClient.getBitgrailPrices())
+      // promises.push(coinRestClient.getBitgrailPrices())
       promises.push(coinRestClient.getKucoinPrices())
     }
 
@@ -202,13 +202,5 @@ angular.module('coin-tracker')
       getAllExchangePrices()
     }, 20*60*1000);
 
-
-    // $scope.bitfinexWallets = [];
-    // function getBitfinexWallets() {
-    //   coinRestClient.getBitfinexWallets()
-    //     .then(function(resp) {
-    //       $scope.bitfinexWallets = resp;
-    //     });
-    // }
 
   })

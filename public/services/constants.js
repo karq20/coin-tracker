@@ -123,9 +123,12 @@ angular.module('coin-tracker')
         {
           name: 'red-pulse',
           symbol: 'RPX'
+        },
+        {
+          name: 'raiblocks',
+          symbol: 'XRB'
         }
-      ],
-      bitgrail: [{name:'raiblocks', symbol: 'XRB'}]
+      ]
 
     }
 
@@ -247,9 +250,7 @@ angular.module('coin-tracker')
           {
             symbol: 'RPX',
             amount: 1800
-          }
-        ],
-        bitgrail: [
+          },
           {
             symbol: 'XRB',
             amount: 180
