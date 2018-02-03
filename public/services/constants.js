@@ -37,6 +37,10 @@ angular.module('coin-tracker')
           symbol: 'OMG'
         },
         {
+          name: 'neo',
+          symbol: 'NEO'
+        },
+        {
           name: 'eidoo',
           symbol: 'EDO'
         },
@@ -75,10 +79,6 @@ angular.module('coin-tracker')
           symbol: 'LRC'
         },
         {
-          name: 'salt',
-          symbol: 'SALT'
-        },
-        {
           name: 'request-network',
           symbol: 'REQ'
         },
@@ -89,10 +89,6 @@ angular.module('coin-tracker')
         {
           name: 'stellar',
           symbol: 'XLM'
-        },
-        {
-          name: 'WABI',
-          symbol: 'WABI'
         },
         {
           name: 'icon',
@@ -137,7 +133,7 @@ angular.module('coin-tracker')
         bitfinex: [
           {
             symbol: 'ETC',
-            amount: 24.97
+            amount: 20
           },
           {
             symbol: 'ZEC',
@@ -153,7 +149,7 @@ angular.module('coin-tracker')
           },
           {
             symbol: 'IOT',
-            amount: 303
+            amount: 203
           },
           {
             symbol: 'EOS',
@@ -164,8 +160,12 @@ angular.module('coin-tracker')
             amount: 17.38
           },
           {
+            symbol: 'NEO',
+            amount: 2.039
+          },
+          {
             symbol: 'EDO',
-            amount: 99
+            amount: 141
           },
           {
             symbol: 'DAT',
@@ -183,15 +183,15 @@ angular.module('coin-tracker')
           // },
           {
             symbol: 'BNB',
-            amount: 96.26
+            amount: 96.19
           },
           {
             symbol: 'NEO',
-            amount: 12
+            amount: 18
           },
           {
             symbol: 'ZRX',
-            amount: 348
+            amount: 300
           },
           {
             symbol: 'OMG',
@@ -202,24 +202,16 @@ angular.module('coin-tracker')
             amount: 235
           },
           {
-            symbol: 'SALT',
-            amount: 50
-          },
-          {
             symbol: 'REQ',
             amount: 500
           },
           {
             symbol: 'BTS',
-            amount: 2737
+            amount: 2000
           },
           {
             symbol: 'XLM',
             amount: 147
-          },
-          {
-            symbol: 'WABI',
-            amount: 50
           },
           {
             symbol: 'ICX',
