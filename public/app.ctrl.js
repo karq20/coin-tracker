@@ -37,8 +37,6 @@ angular.module('coin-tracker')
       listOfProcessFunctions.forEach(function(process, index) {
         process(responses[index])
       })
-      $scope.currentNetWorth = 2*Number($scope.ethPrice)+100*Number($scope.nanoPrice)+132.13*Number($scope.bnbPrice)+256.84*Number($scope.eosPrice);
-      $scope.currentBtcWorth = $scope.currentNetWorth/Number($scope.binanceBtcPrice);
       calculateTotalUsd()
     })
 
@@ -198,6 +196,9 @@ angular.module('coin-tracker')
         $scope.exchangeWiseBtcTotal[ex] = $scope.exchangeWiseUsdTotal[ex]/$scope.binanceBtcPrice
         $scope.exchangeWiseBtcTotal[ex] = $scope.toFixed($scope.exchangeWiseBtcTotal[ex], 6)
       }
+
+        $scope.currentNetWorth = 2*Number($scope.ethPrice)+100*Number($scope.nanoPrice)+132.13*Number($scope.bnbPrice)+256.84*Number($scope.eosPrice);
+        $scope.currentBtcWorth = $scope.currentNetWorth/$scope.binanceBtcPrice;
 
 
     }
