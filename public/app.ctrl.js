@@ -197,8 +197,15 @@ angular.module('coin-tracker')
         $scope.exchangeWiseBtcTotal[ex] = $scope.toFixed($scope.exchangeWiseBtcTotal[ex], 6)
       }
 
+      console.log("$scope.ethPrice = "+$scope.ethPrice)
+        console.log("$scope.eosPrice = "+$scope.eosPrice)
+        console.log("bnbPrice = " + $scope.bnbPrice)
+        console.log("nanoPrice = "+$scope.nanoPrice)
+        console.log("binanceBtcPrice = "+$scope.binanceBtcPrice)
         $scope.currentNetWorth = 2*Number($scope.ethPrice)+100*Number($scope.nanoPrice)+132.13*Number($scope.bnbPrice)+256.84*Number($scope.eosPrice);
+      console.log("current net worth = "+ $scope.currentNetWorth)
         $scope.currentBtcWorth = $scope.currentNetWorth/$scope.binanceBtcPrice;
+        console.log("current btc worth = "+ $scope.currentBtcWorth)
 
 
     }
