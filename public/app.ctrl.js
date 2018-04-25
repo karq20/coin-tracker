@@ -6,7 +6,7 @@ angular.module('coin-tracker')
     var bfxString = constantsService.getMyBitfinexCoinStringQuery()
     $scope.amountByExchange = constantsService.getNumberOfCoins()
     $scope.myCoins = constantsService.myCoins;
-    $scope.selected = 'prices'
+    $scope.selected = 'current'
 
     var listOfProcessFunctions = [
       // processCexPrices,
