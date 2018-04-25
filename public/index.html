@@ -21,6 +21,12 @@
 
 		<div class="btn-group" role="group">
 			<div class="btn btn-default"
+				 ng-model="selected"
+				 ng-click="selected='current'"
+				 ng-class="{'btn-primary':selected=='current'}">
+				Current
+			</div>
+			<div class="btn btn-default"
 					 ng-model="selected"
 					 ng-click="selected='prices'"
 					 ng-class="{'btn-primary':selected=='prices'}">
@@ -34,12 +40,12 @@
 			</div>
 		</div>
 
-
-		
+		<div ng-if="selected == 'current'">
+			<div ng-include src="'templates/current-2018.html'"></div>
+		</div>
 		<div ng-if="selected == 'prices'">
 			<div ng-include src="'templates/prices.html'"></div>
 		</div>
-
 		<div ng-if="selected == 'wallets'">
 			<div ng-include src="'templates/wallets.html'"></div>
 		</div>

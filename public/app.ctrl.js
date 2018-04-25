@@ -1,6 +1,7 @@
 angular.module('coin-tracker')
   .controller('MainCtrl', function($scope, $http, coinRestClient, constantsService, $q) {
 
+    $scope.currentNetWorth = 0;
     var promises = []
     var bfxString = constantsService.getMyBitfinexCoinStringQuery()
     $scope.amountByExchange = constantsService.getNumberOfCoins()
@@ -35,6 +36,8 @@ angular.module('coin-tracker')
       listOfProcessFunctions.forEach(function(process, index) {
         process(responses[index])
       })
+      $scope.currentNetWorth = 2*$scope.ethPrice+100*$scope.nanoPrice+132.13*$scope.bnbPrice+256.84*$scope.eosPrice;
+      $scope.currentBtcWorth = $scope.currentNetWorth/$scope.binanceBtcPrice;
       calculateTotalUsd()
     })
 
@@ -75,11 +78,13 @@ angular.module('coin-tracker')
 
       allBinancePrices.map(function(p) {
         $scope.myCoins.binance.map(function(coin) {
-          if(coin.symbol == p.symbol)
-            $scope.binancePrices.push(p)
+          if(coin.symbol == p.symbol) $scope.binancePrices.push(p)
         })
-      })
+        if(p.symbol == 'ETHUSDT') $scope.ethPrice = p.price;
+        if(p.symbol == 'NANOBTC') $scope.nanoPrice = p.price*$scope.binanceBtcPrice;
+        if(p.symbol == 'BNBUSDT') $scope.bnbPrice = p.price;
 
+      })
       // $scope.binancePrices.unshift({symbol:'BTC', price: $scope.binanceBtcPrice})
     }
 
@@ -90,6 +95,8 @@ angular.module('coin-tracker')
         priceObj.symbol = p[0].substr(1, p[0].length-4);
         priceObj.price = Number(p[7]).toFixed(2);
         $scope.bitfinexPrices.push(priceObj);
+        if(priceObj.symbol == 'EOS') $scope.eosPrice = priceObj.price;
+
       })
     }
 
