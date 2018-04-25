@@ -8,6 +8,7 @@ angular.module('coin-tracker')
     $scope.myCoins = constantsService.myCoins;
     $scope.selected = 'current'
 
+
     var listOfProcessFunctions = [
       // processCexPrices,
       processBinancePrices,
@@ -36,8 +37,8 @@ angular.module('coin-tracker')
       listOfProcessFunctions.forEach(function(process, index) {
         process(responses[index])
       })
-      $scope.currentNetWorth = 2*$scope.ethPrice+100*$scope.nanoPrice+132.13*$scope.bnbPrice+256.84*$scope.eosPrice;
-      $scope.currentBtcWorth = $scope.currentNetWorth/$scope.binanceBtcPrice;
+      $scope.currentNetWorth = 2*Number($scope.ethPrice)+100*Number($scope.nanoPrice)+132.13*Number($scope.bnbPrice)+256.84*Number($scope.eosPrice);
+      $scope.currentBtcWorth = $scope.currentNetWorth/Number($scope.binanceBtcPrice);
       calculateTotalUsd()
     })
 
