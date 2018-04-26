@@ -20,12 +20,12 @@
 	<div ng-controller="MainCtrl"  style="font-size:14px">
 
 		<div class="btn-group" role="group">
-			<div class="btn btn-default"
-				 ng-model="selected"
-				 ng-click="selected='current'"
-				 ng-class="{'btn-primary':selected=='current'}">
-				Current
-			</div>
+			<!--<div class="btn btn-default"-->
+				 <!--ng-model="selected"-->
+				 <!--ng-click="selected='current'"-->
+				 <!--ng-class="{'btn-primary':selected=='current'}">-->
+				<!--Current-->
+			<!--</div>-->
 			<div class="btn btn-default"
 					 ng-model="selected"
 					 ng-click="selected='prices'"
@@ -42,9 +42,9 @@
 			</div>
 		</div>
 
-		<div ng-if="selected == 'current'">
-			<div ng-include src="'templates/current-2018.html'"></div>
-		</div>
+		<!--<div ng-if="selected == 'current'">-->
+			<!--<div ng-include src="'templates/current-2018.html'"></div>-->
+		<!--</div>-->
 		<div ng-if="selected == 'prices'">
 			<div ng-include src="'templates/prices.html'"></div>
 		</div>
@@ -52,11 +52,8 @@
 			<div ng-include src="'templates/wallets.html'"></div>
 		</div>
 
-
-
-
+		
 	</div>
-
 
 
 	<script src="bower_components/angular/angular.min.js"></script>
