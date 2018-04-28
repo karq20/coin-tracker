@@ -12,10 +12,6 @@ angular.module('coin-tracker')
 
     constantsService.myCoins = {
       bitfinex: [
-        {
-          name: 'eos',
-          symbol: 'EOS'
-        },
           {
               name:'Btc',
               symbol: 'BTC'
