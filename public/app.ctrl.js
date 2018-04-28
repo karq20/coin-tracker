@@ -126,7 +126,8 @@ angular.module('coin-tracker')
         })
       }
 
-      $scope.totalUsd += constantsService.usd.bitfinex;
+      $scope.bitfinexUsd = constantsService.usd.bitfinex;
+      $scope.totalUsd += $scope.bitfinexUsd;
 
       $scope.totalUsd = $scope.toFixed($scope.totalUsd, 2)
       $scope.totalBtc = $scope.totalUsd/$scope.binanceBtcPrice

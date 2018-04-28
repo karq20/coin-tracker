@@ -31,6 +31,10 @@
             </tr>
             </thead>
             <tbody>
+            <tr>
+                <td>USD</td>
+                <td>{{bitfinexUsd}}</td>
+            </tr>
             <tr data-ng-repeat="pair in amountByExchange.bitfinex track by $index">
               <td>{{pair.symbol}}</td>
               <td>{{pair.amount}}</td>
