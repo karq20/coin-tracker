@@ -6,12 +6,24 @@ angular.module('coin-tracker')
 
     var constantsService = {}
 
+    constantsService.usd = {
+        bitfinex: 3304
+    }
+
     constantsService.myCoins = {
       bitfinex: [
         {
           name: 'eos',
           symbol: 'EOS'
         },
+          {
+              name:'Btc',
+              symbol: 'BTC'
+          },
+          {
+              name: 'Monero',
+              symbol:'XMR'
+          }
       ],
       binance: [
         { // in my ether wallet
@@ -22,10 +34,10 @@ angular.module('coin-tracker')
         //   name: 'bitcoin',
         //   symbol: 'BTC'
         // },
-        {
-          name: 'binance-coin',
-          symbol: 'BNB'
-        },
+        // {
+        //   name: 'binance-coin',
+        //   symbol: 'BNB'
+        // },
         {
           name: 'nano',
           symbol: 'NANO'
@@ -36,10 +48,14 @@ angular.module('coin-tracker')
     constantsService.getNumberOfCoins = function () {
       return {
         bitfinex: [
-          {
-            symbol: 'EOS',
-            amount: 256.84
-          },
+            {
+                symbol: 'BTC',
+                amount: 0.20542
+            },
+            {
+                symbol:'XMR',
+                amount: 4.005
+            }
         ],
         binance: [
           { // in myetherwallet
@@ -50,10 +66,6 @@ angular.module('coin-tracker')
           //   symbol: 'BTC',
           //   amount: 0
           // },
-          {
-            symbol: 'BNB',
-            amount: 132.13
-          },
           {
             symbol: 'NANO',
             amount: 100
