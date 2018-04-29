@@ -38,6 +38,7 @@ angular.module('coin-tracker')
           return p.price;
       })[0].price
       $scope.binanceBtcPrice = Number($scope.binanceBtcPrice).toFixed(2)
+      $scope.binanceBtcInrPrice = $scope.binanceBtcPrice * 65;
     }
 
     function processBinancePrices(list) {
@@ -102,10 +103,6 @@ angular.module('coin-tracker')
           var amount = findAmountOfCoin(c, coin.symbol)
           var price;
           switch(c) {
-            case 'cex':
-              price = findPriceOfCoin($scope.cexPrices, coin.symbol)
-              $scope.exchangeWiseUsdTotal['cex'] += price*amount
-              break;
             case 'bitfinex':
               price = findPriceOfCoin($scope.bitfinexPrices, coin.symbol)
               $scope.exchangeWiseUsdTotal['bitfinex'] += price*amount
@@ -114,19 +111,14 @@ angular.module('coin-tracker')
               price = findPriceOfCoin($scope.binancePrices, coin.symbol)
               $scope.exchangeWiseUsdTotal['binance'] += price*amount
               break;
-            case 'kucoin':
-              price = findPriceOfCoin($scope.kucoinPrices, coin.symbol)
-              $scope.exchangeWiseUsdTotal['kucoin'] += price*amount
-              break;
-            case 'bitgrail':
-              price = findPriceOfCoin($scope.bitgrailPrices, coin.symbol)
-              $scope.exchangeWiseUsdTotal['bitgrail'] += price*amount
           }
           $scope.totalUsd = $scope.totalUsd + price*amount
         })
       }
 
       $scope.bitfinexUsd = constantsService.usd.bitfinex;
+      $scope.exchangeWiseUsdTotal.bitfinex += $scope.bitfinexUsd;
+
       $scope.totalUsd += $scope.bitfinexUsd;
 
       $scope.totalUsd = $scope.toFixed($scope.totalUsd, 2)
@@ -138,7 +130,7 @@ angular.module('coin-tracker')
         $scope.exchangeWiseBtcTotal[ex] = $scope.exchangeWiseUsdTotal[ex]/$scope.binanceBtcPrice
         $scope.exchangeWiseBtcTotal[ex] = $scope.toFixed($scope.exchangeWiseBtcTotal[ex], 6)
       }
-
+      $scope.totalInr = $scope.totalUsd * 65;
     }
 
     $scope.toFixed = function (num, prec) {

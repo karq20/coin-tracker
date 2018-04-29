@@ -7,7 +7,7 @@ angular.module('coin-tracker')
     var constantsService = {}
 
     constantsService.usd = {
-        bitfinex: 3304
+        bitfinex: 2803.59
     }
 
     constantsService.myCoins = {
@@ -19,6 +19,10 @@ angular.module('coin-tracker')
           {
               name: 'Monero',
               symbol:'XMR'
+          },
+          {
+              name: 'Aventus',
+              symbol: 'AVT'
           }
       ],
       binance: [
@@ -51,6 +55,10 @@ angular.module('coin-tracker')
             {
                 symbol:'XMR',
                 amount: 4.005
+            },
+            {
+                symbol: 'AVT',
+                amount: 305.19
             }
         ],
         binance: [
