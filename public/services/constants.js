@@ -7,37 +7,27 @@ angular.module('coin-tracker')
     var constantsService = {}
 
     constantsService.usd = {
-        bitfinex: 2803.59
+        binance: 0
     }
 
     constantsService.myCoins = {
-      bitfinex: [
-          {
-              name:'Btc',
-              symbol: 'BTC'
-          },
-          {
-              name: 'Monero',
-              symbol:'XMR'
-          },
-          {
-              name: 'Aventus',
-              symbol: 'AVT'
-          }
-      ],
       binance: [
         { // in my ether wallet
           name: 'ethereum',
           symbol: 'ETH'
         },
-        // {
-        //   name: 'bitcoin',
-        //   symbol: 'BTC'
-        // },
-        // {
-        //   name: 'binance-coin',
-        //   symbol: 'BNB'
-        // },
+        {
+          name: 'ripple',
+          symbol: 'XRP'
+        },
+        {
+          name: 'eos',
+          symbol: 'EOS'
+        },
+        {
+          name: 'litecoin',
+          symbol: 'LTC'
+        },
         {
           name: 'nano',
           symbol: 'NANO'
@@ -47,29 +37,23 @@ angular.module('coin-tracker')
 
     constantsService.getNumberOfCoins = function () {
       return {
-        bitfinex: [
-            {
-                symbol: 'BTC',
-                amount: 0.20542
-            },
-            {
-                symbol:'XMR',
-                amount: 4.005
-            },
-            {
-                symbol: 'AVT',
-                amount: 305.19
-            }
-        ],
         binance: [
           { // in myetherwallet
             symbol: 'ETH',
-            amount: 2
+            amount: 7.851
           },
-          // {
-          //   symbol: 'BTC',
-          //   amount: 0
-          // },
+          {
+            symbol: 'EOS',
+            amount: 52.26
+          },
+          {
+            symbol: 'XRP',
+            amount: 1366
+          },
+          {
+            symbol: 'LTC',
+            amount: 2.83
+          },
           {
             symbol: 'NANO',
             amount: 100
@@ -78,12 +62,12 @@ angular.module('coin-tracker')
       }
     }
 
-    constantsService.getMyBitfinexCoinStringQuery = function () {
-      var bitfinexCoins = constantsService.myCoins['bitfinex']
-      return bitfinexCoins.reduce(function (acc, val, index) {
-        return acc + 't' + val.symbol + 'USD' + ',';
-      }, '')
-    }
+    // constantsService.getMyBitfinexCoinStringQuery = function () {
+    //   var bitfinexCoins = constantsService.myCoins['bitfinex']
+    //   return bitfinexCoins.reduce(function (acc, val, index) {
+    //     return acc + 't' + val.symbol + 'USD' + ',';
+    //   }, '')
+    // }
 
     return constantsService;
 

@@ -1,50 +1,38 @@
 angular.module('coin-tracker')
   .controller('MainCtrl', function($scope, $http, coinRestClient, constantsService, $q) {
 
-    $scope.currentNetWorth = 0;
+    $scope.currentNetWorth = 0
+    $scope.dollarRate = 71.5
     var promises = []
-    var bfxString = constantsService.getMyBitfinexCoinStringQuery()
+    // var bfxString = constantsService.getMyBitfinexCoinStringQuery()
     $scope.amountByExchange = constantsService.getNumberOfCoins()
-    $scope.myCoins = constantsService.myCoins;
+    $scope.myCoins = constantsService.myCoins
     $scope.selected = 'prices'
-
-
-    var listOfProcessFunctions = [
-      processBinancePrices,
-      processBitfinexPrices,
-    ]
 
     getAllExchangePrices()
 
     function getAllExchangePrices() {
       $scope.binancePrices = []
-      $scope.bitfinexPrices = []
-
-      promises.push(coinRestClient.getAllBinancePrices())
-      promises.push(coinRestClient.getBitfinexPrices(bfxString))
+      coinRestClient.getAllCoinsPrices().then(function(resp) {
+        console.log(resp)
+        processBinancePrices(resp)
+        calculateTotalUsd()
+      })
     }
 
-    $q.all(promises).then(function(responses) {
-      listOfProcessFunctions.forEach(function(process, index) {
-        process(responses[index])
-      })
-      calculateTotalUsd()
-    })
-
-
-    function getBinanceBtcPrice(prices) {
+    function getBtcPriceFromStdExchange(prices) {
       $scope.binanceBtcPrice = prices.filter(function(p) {
         if(p.symbol == 'BTCUSDT')
           return p.price;
       })[0].price
       $scope.binanceBtcPrice = Number($scope.binanceBtcPrice).toFixed(2)
-      $scope.binanceBtcInrPrice = $scope.binanceBtcPrice * 65;
+      $scope.binanceBtcInrPrice = $scope.binanceBtcPrice * $scope.dollarRate;
     }
 
     function processBinancePrices(list) {
       var prices = JSON.parse(list);
 
-      getBinanceBtcPrice(prices)
+      getBtcPriceFromStdExchange(prices)
 
       var allBinancePrices = prices.map(function(p) {
         if(p.symbol.substr(-3,3) == 'BTC') {
@@ -130,7 +118,7 @@ angular.module('coin-tracker')
         $scope.exchangeWiseBtcTotal[ex] = $scope.exchangeWiseUsdTotal[ex]/$scope.binanceBtcPrice
         $scope.exchangeWiseBtcTotal[ex] = $scope.toFixed($scope.exchangeWiseBtcTotal[ex], 6)
       }
-      $scope.totalInr = $scope.totalUsd * 65;
+      $scope.totalInr = $scope.totalUsd * $scope.dollarRate;
     }
 
     $scope.toFixed = function (num, prec) {

@@ -45,19 +45,6 @@ app.get('*', function(req, res) {
   res.sendFile('public/index.html', { root: __dirname }); // load the single view file (angular will handle the page changes on the front-end)
 });
 
-// CEX prices
-var cexApiBaseUrl = 'https://cex.io/api'
-var cexTickerApi = '/last_prices/USD'
-app.post('/api/cex/prices', function(req, res) {
-  request({
-    uri: cexApiBaseUrl + cexTickerApi,
-    method: 'GET'
-  }, function(err, response, body) {
-    if (err) res.send(err);
-    res.json(response);
-  })
-})
-
 // Binance prices
 var binanceApiBaseUrl = 'https://api.binance.com/api/';
 var binanceTickerApi = 'v1/ticker/allPrices';
@@ -70,74 +57,3 @@ app.post('/api/binance/allPrices', function(req, res) {
     res.json(response);
   })
 });
-
-
-// Bitfinex prices
-var bitfinexApiBaseUrl = 'https://api.bitfinex.com/';
-var bitfinexWalletApi = 'v2/auth/r/wallets';
-var bitfinexTickerApi = 'v2/tickers';
-var signature = '/api/'+ bitfinexWalletApi + nonce;
-signature = crypto
-    .createHmac('sha384', BFX_API_SECRET)
-    .update(signature)
-    .digest('hex');
-
-app.post('/api/bitfinex/prices', function(req, res) {
-  //req.coins comma separated with t
-  var url = bitfinexApiBaseUrl + bitfinexTickerApi + '?symbols=' + req.body.coins;
-  request({
-    uri: url,
-    method: 'GET'
-  }, function (err, response, body) {
-    if (err) res.send(err);
-    res.json(response);
-  })
-})
-
-// Bitfinex wallet
-app.post('/api/bitfinex/wallets', function(req, res) {
-  request({
-    uri: bitfinexApiBaseUrl + bitfinexWalletApi,
-    method: 'POST',
-    headers: {
-        'bfx-nonce': nonce,
-        'bfx-apikey': BFX_API_KEY,
-        'bfx-signature': signature
-    },
-    body:{},
-    json: true
-  },
-  function (err, response, body)  {
-    if (err) res.send(err);
-    res.json(response);
-  })
-})
-
-
-//Bitgrail prices
-var bitgrailApiUrl = 'https://api.bitgrail.com/v1/markets'
-app.post('/api/bitgrail/prices', function(req, res) {
-  request({
-    uri: bitgrailApiUrl,
-    method: 'GET'
-  }, function (err, response, body) {
-    if (err) res.send(err);
-    res.json(response);
-  })
-})
-
-// Kucoin prices
-
-var kucoinApiUrl = 'https://api.kucoin.com/v1/open/tick'
-app.post('/api/kucoin/prices', function(req, res) {
-  request({
-    uri: kucoinApiUrl,
-    method: 'GET'
-  }, function (err, response, body) {
-    if (err) res.send(err);
-    res.json(response);
-  })
-})
-
-
-
